@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: firebase-otp-bot-web
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
+    envVars:
+      - key: PORT
+        gen: true
+      - key: BOT_TOKEN
+        value: "8681990378:AAFbGpzsTXc7dBsl02aQQxk7iqsR64kCRz8"
+      - key: ADMIN_ID
+        value: "5999496406"  # CHANGE TO YOUR TELEGRAM ID
+      - key: WEBHOOK_DOMAIN
+        value: "https://firebase-otp-bot-web.onrender.com"
+    healthCheckPath: /health
+    plan: free
+
+  - type: worker
+    name: firebase-monitor-worker
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python worker.py"
+    envVars:
+      - key: BOT_TOKEN
+        value: "8681990378:AAFbGpzsTXc7dBsl02aQQxk7iqsR64kCRz8"
+      - key: ADMIN_ID
+        value: "5999496406"
+    plan: free
